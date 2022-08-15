@@ -4,14 +4,28 @@
          rackunit/text-ui
          "problemas.rkt")
 
-(define-test-suite pruebas
-  (test-case "countdown"
-    (check-equal? (countdown 5)
-                  '(5 4 3 2 1 0)))
-  
+(define (countdown n)
+  ;(for-each display lista) )
+  ;(while (not( n > -1))
+  ;       displayln n))
+   ;(for-each displayln lista) )
+ ;(define lista (list 5 4 3 2 1))
+  (if(equal? n 0)
+     (list 0) ; usar append
+     (cons n countdown (- n 1))))
+
+
+ #| 
   (test-case "insertL"
     (check-equal? (insertL 'x 'y '(x z z x y x))
                   '(y x z z y x y y x)))
+
+  (define (insertL a b ls)
+  (if (empty> ls)
+  '()
+  (if(eq? a (first ls))
+  ( cons b (cons a (insertL a b(rest ls)))))
+
   
   (test-case "remv-1st"
     (check-equal? (remv-1st 'x '(x y z x))
