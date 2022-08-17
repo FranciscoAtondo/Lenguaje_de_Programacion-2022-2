@@ -1,22 +1,46 @@
 #lang racket
 
+
 (require rackunit
          rackunit/text-ui
          "problemas.rkt")
-
+; 1)
+#|
 (define (countdown n)
-  ;(for-each display lista) )
-  ;(while (not( n > -1))
-  ;       displayln n))
-   ;(for-each displayln lista) )
- ;(define lista (list 5 4 3 2 1))
+  (if ( equal? n -1)
+      (for (i nums)
+        (displayln i)))
+  (if (not (equal? n -1))
+      (append nums n)
+      (sub1 n)))
+|#
+
+#|
+(while (not (equal n 0))
+         ((append nums n)
+          (sub1 n)))
+  (for ([i nums])
+    println i))
+  |# #|(for-each display lista) )
+  (while (not( n > -1))
+         displayln n))
+   (for-each displayln lista) )
+ (define lista (list 5 4 3 2 1))
+  (if(empty> nums)
+     (append nums n))
   (if(equal? n 0)
      (list 0) ; usar append
      (cons n countdown (- n 1))))
 
+(define (list nums))
+|#
 
- #| 
-  (test-case "insertL"
+; 2)
+  
+  (define (insertL x y lst)
+    )
+  
+(test-case "insertL"
     (check-equal? (insertL 'x 'y '(x z z x y x))
                   '(y x z z y x y y x)))
 
@@ -26,7 +50,8 @@
   (if(eq? a (first ls))
   ( cons b (cons a (insertL a b(rest ls)))))
 
-  
+
+  #|
   (test-case "remv-1st"
     (check-equal? (remv-1st 'x '(x y z x))
                   '(y z x))
@@ -60,11 +85,21 @@
                   '(42 120 1 2 3))
     (check-equal? (append '(a b c) '(cat dog))
                   '(a b c cat dog)))
+  |#
+
+  (define (reverse ls)
+      (if (empty? ls)
+          null
+          (append (reverse (rest ls))
+              '(list (first ls)))))
+
   
-  (test-case "reverse"
-    (check-equal? (reverse '(a 3 x))
-                  '(x 3 a)))
-  
+  (define (f x ls)
+  (if (null? ls)
+      null
+      (cons (cons x (first ls))
+            (f x (rest ls)))))
+  #|
   (test-case "repeat"
     (check-equal? (repeat '(4 8 11) 4)
                   '(4 8 11 4 8 11 4 8 11 4 8 11)))
@@ -123,5 +158,4 @@
     (let ((ns (make-base-namespace)))
       (check-equal? (eval quine ns) quine)
       (check-equal? (eval (eval quine ns) ns) quine))))
-
-(run-tests pruebas 'verbose)
+|#
