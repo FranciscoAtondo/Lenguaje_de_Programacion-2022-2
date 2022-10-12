@@ -44,6 +44,7 @@ DenVal = Int + Bool + Proc\\
 In PROC, procedures have only one argument, but one can get the effect of multiple argument procedures by using procedures that return other procedures. For example, one might write code like\\ \\
 let f = proc (x) proc (y) ...\\
 in ((f 3) 4)\\ \\
+
 This trick is called Currying, and the procedure is said to be Curried. Write a Curried procedure that takes two arguments and returns their sum. You can write x + y in our language by writing −(x,−(0, y)).\\ \\
 
 Sintaxis Concreta:\\
@@ -63,12 +64,17 @@ Expression ::= (Expression {Expression}∗)\\ \\
 Sintaxis Concreta:\\
 Expression ::= proc ( ( {Identifier} (Identifier)' ) ( Expression ( Expression ) )' )\\
 Agregamos:\\
-\= \> Letproc-exp 
+\= \> let n\\
+\= \> in ( ( body )'(n) ( var )'(n) )\\ \\
+
+Sintaxis Semantica:\\
+( call-exp (  value-of (const-exp n ) (let-exp n exp body ) ) p )\\
+
+
 
 \newpage
 \section{3.25}
-Exercise 3.25 [] The tricks of the previous exercises can be generalized to show that
-we can define any recursive procedure in PROC. Consider the following bit of code:\\
+Exercise 3.25 [] The tricks of the previous exercises can be generalized to show that we can define any recursive procedure in PROC. Consider the following bit of code:\\
 \= \> let makerec = proc (f)\\
 \= \> \> let d = proc (x)\\
 \= \> \>\> proc (z) ((f (x x)) z)\\
@@ -86,8 +92,8 @@ Show that it returns 12.
 \section{3.27}
 Add a new kind of procedure called a traceproc to the language. A traceproc works exactly like a proc, except that it prints a trace message on entry and on exit.
 
-
-
+let traceproc = proc print ( procedure p )\\
+in let 
     
 \end{tab}
 \end{document}
