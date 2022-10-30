@@ -1,5 +1,4 @@
 \documentclass{article}
-\usepackage{libertine}
 \usepackage[utf8]{inputenc}
 
 \title{Ejercisios Explicit-Refs}
@@ -8,7 +7,7 @@
 
 \begin{document}
 
-
+\begin{tab}
 
 \maketitle
 
@@ -16,21 +15,21 @@
 \noindent Muestra exactamente en que parte de nuestra implementacion del almacenamiento las operaciones toman tiempo lineal en lugar de tiempo constante.\\
 
 \noindent Se puede argumentar que el tiempo constante es tomado durante la ejecucion de value-of:\\
-\hspace{5mm} (value-of exp1 p o) = (val1 , o1)\\
+ (value-of exp1 p o) = (val1 , o1)\\
 
 Por lo que si usamos:\\
-let x = newref(0)\\
-in letrec even(dummy)\\
-\hspace{1mm} = if zero?(deref(x ))\\
-\hspace{2mm} then 1\\
-\hspace{2mm} else begin setref(x , -(deref(x ),1)); (odd 666) end\\
-\hspace{1mm} odd(dummy)\\
-\hspace{1mm} = if zero?(deref(x ))\\
-\hspace{2mm} then 0\\
-\hspace{2mm} else begin setref(x , -(deref(x ),1)); (even 666) end\\
-\hspace{1mm} in begin setref(x ,13); (odd 666) end\\
+\- \> let x = newref(0)\\
+\- \> in letrec even(dummy)\\
+\- \> \> = if zero?(deref(x ))\\
+\- \> \> \> then 1\\
+\- \> \> \>else begin setref(x , -(deref(x ),1)); (odd 666) end\\
+\- \> \> odd(dummy)\\
+\- \> \> = if zero?(deref(x ))\\
+\- \> \> \> then 0\\
+\- \> \> \> else begin setref(x , -(deref(x ),1)); (even 666) end\\
+\- \> in begin setref(x ,13); (odd 666) end\\
 
-\noindent como ejemplo de la implementacion del almacenamiento, se dice que las operaciones toman tiempo lineal en la definicion de la operacion, osea "let x = newref(0).\\
+\noindent como ejemplo de la implementacion del almacenamiento, se dice que las operaciones toman tiempo lineal en la definicion de la operacion, osea "let x = newref(0)".\\
 
 \section{4.9}
 Implementa el almacenamiento en tiempo constante representandolo comoun vector de Racket. ¿Qu´e perdemos al usar esta representacion?
@@ -49,6 +48,6 @@ let list = newref(0)
 Nuestro entendimiento del almacenamiento, en este int´erprete, depende del significado de efectos en Racket. En particular, depende en que nosotros sepamos cuando estos efectos ocurren en un programa de Racket. Podemos evitar esta dependencia al escribir un interprete que siga mas de cerca la especificacion. En este interprete, value-of regresarıa tanto el valor como el estado de almacenamiento.
 Implementa esta version del interprete.
 
-
+\end{tab}
 
 \end{document}
