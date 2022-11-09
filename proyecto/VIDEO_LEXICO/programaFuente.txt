@@ -1,0 +1,31 @@
+inicie
+declare var operando1 como entero;
+declare var operando2 como entero;
+declare var suma como entero;
+operando1 = 20;
+operando2 = 0;
+suma = operando1 + operando2;
+imprima("Suma: "+suma);
+imprima("Resta: "+resta);
+imprima("Multiplicacion: "+multip);
+si(operando2 == 0)entonces #
+ imprima ("Error al dividir en 0");
+#
+sino #
+ division = operando1 / operando2;
+ imprima("Division: "+division);
+#         
+declare var contador como entero;
+contador = 1;
+repita #
+ imprima(contador);
+ contador = contador + 1;
+#hasta(contador = 6);
+
+contador = 1;
+mientras(contador <> 3)haga #
+ contador = contador +1;
+ imprima(contador);
+#	
+termine
+
