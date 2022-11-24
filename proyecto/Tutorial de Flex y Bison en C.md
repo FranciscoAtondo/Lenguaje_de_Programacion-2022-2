@@ -2,3 +2,25 @@
 ## Introduccion
 Flex y Bison son herramientras usadas para la creacion de programas orientadas al manejo de entrada de estructuras. Flex genera analizadores lexicos con los cuales busca tokens en expresiones regulares y los compara con un Fichero de Entrada para realizar tareas relacionadas a estas. Bison por otro lado es un generador de Analizadores Sintacticos de uso general que indica si el Fichero de Entrada dado pertenece al lenguaje generado por su gramatica.
 
+```
+/* just like Unix wc */
+%{
+int chars = 0;
+int words = 0;
+int lines = 0;
+%}
+%%
+[a-zA-Z]+ { words++; chars += strlen(yytext); }
+\n { chars++; lines++; }
+. { chars++; }
+%%
+main(int argc, char **argv)
+{
+yylex();
+printf("%8d%8d%8d\n", lines, words, chars);
+}
+```
+<em>Ejemplo de un programa Flex en C que cuenta palabras y las categoriza por lineas, palabras y caracteres</em>
+
+Un programa Flex esta compuesto por 3 secciones: Declaracion y Configuracion de Opciones, Lista de Patrones y Acciones y Codigo. Estas se dividen por lineas "%%". En el ejemplo de arriba, la seccion de Declaraciones prepara 3 valores a usar en el contador, la seccion de Patrones y Acciones, estos se encuentran al inicio de la linea y se encuentran en sincronia con el codigo C para ser ejecutados cuando se encuentre un patron. En este caso, solo hay 3 patrones a reconocer: cualquier string de letras entre el grupo declarado [a-zA-Z]+, osea cualquier letra del abecedario, ya sea Minuscula o Mayuscula, "\n" osea las declaraciones de nueva linea y un punto(.), osea una expresion regular para cualquier caracter.
+
