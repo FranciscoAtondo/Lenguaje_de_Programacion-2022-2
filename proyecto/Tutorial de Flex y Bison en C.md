@@ -41,4 +41,19 @@ Las secciones de Declaracion y Configuracion de Opciones y el Codigo son identic
 ## Flex
 Primero se vera mas de cerca como funciona Flex como una herramienta propia con varios ejemplos.
 
-# Expresiones Regulares
+### Expresiones Regulares
+Estas son combinaciones de caracteres, por ejemplo para definir todo numero Fortran que puede ser decimal, esta se escribre asi:
+
+[-+]?[0-9]+
+
+Donde [-+] significa que el valor dado puede ser tanto positivo o negativo, ? que puede ser un punto decimal, [0-9] que significa todo numero de 0 a 9 y '+' dice que puede ser uno o mas valores. Sin embargo esta expresion esta erronea, pues esta puede aceptar un valor como '1.2.3.4', pero esto se puede arreglar expandiendo un poco la Expresion y usando el operador '|', el cual permite la combinacion de dos versiones:
+
+[-+]?([0-9]*\.?[0-9]+|[0-9]+\.)
+
+Sin embargo esto es internamente ambiguo, pues hay muchos hilos que concuerdan con cualquiera de las alternativas, pero Flex permite dos patrones coincidir con la misma entrada usando el exponente opcional 'E':
+
+E(+|-)?[0-9]+
+
+[-+]?([0-9]*\.?[0-9]+|[0-9]+\.)(E(+|-)?[0-9]+)?
+
+### Manejo de Patrones Ambiguos
