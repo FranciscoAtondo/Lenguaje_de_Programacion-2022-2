@@ -57,3 +57,10 @@ E(+|-)?[0-9]+
 [-+]?([0-9]*\.?[0-9]+|[0-9]+\.)(E(+|-)?[0-9]+)?
 
 ### Tokens Dependientes de Contexto
+Normalmente, escanear es algo dependiente de contexto, como por ejemplo, en Pascal, 1. es usualmente un numero punto-flotante, pero en una declaracion 1..2 son dos integrantes separados por un token '..'. Flex provee estados de inicio, los cuales pueden convertir patrones dinamicamente y son generalmente suficientes para manejar tales
+
+In some languages, scanning is context dependent. For example, in Pascal, 1. is usually
+a floating-point number, but in a declaration, 1..2 is two integers separated by a ..
+token. Flex provides start states, which can turn patterns on and off dynamically and
+are generally sufficient to handle such context dependencies. We discuss start states
+later in this chapter.
