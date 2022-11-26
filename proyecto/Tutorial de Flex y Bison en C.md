@@ -11,13 +11,13 @@ int lines = 0;
 %}
 %%
 [a-zA-Z]+ { words++; chars += strlen(yytext); }
-\n { chars++; lines++; }
-. { chars++; }
+\n        { chars++; lines++; }
+.         { chars++; }
 %%
 main(int argc, char **argv)
 {
-yylex();
-printf("%8d%8d%8d\n", lines, words, chars);
+  yylex();
+  printf("%8d%8d%8d\n", lines, words, chars);
 }
 ```
 <em>Ejemplo de un programa Flex en C que cuenta palabras y las categoriza por lineas, palabras y caracteres</em>
@@ -93,4 +93,102 @@ char **argv;
 }
 ```
 
+La unica diferencia que tiene esta version es que ahora abre un archivo segun la linea de comando, asignandolo a yyin para que yylex lo asigne automaticante a la entrada estandar.
 
+### Inicializar Estados y Archivos de Entrada Anidados
+Ahora probaremos nuestro conocimiento de Flex I/O con un simple programa que maneja archivos anidados y los imprime señalando el numero de linea en los archivos. Para ello, el programa mantiene una pila de Archivos de Entrada Anidados y el numero de lineas, empujando una entrada cada vez que encuentra un '#include':
+
+```
+%option noyywrap
+%x IFILE
+%{
+struct bufstack {
+struct bufstack *prev; /* previous entry */
+YY_BUFFER_STATE bs; /* saved buffer */
+int lineno; /* saved line number */
+char *filename; /* name of this file */
+FILE *f; /* current file */
+} *curbs = 0;
+char *curfilename; /* name of current input file */
+int newfile(char *fn);
+int popfile(void);
+%}
+%%
+match #include statement up through the quote or <
+^"#"[ \t]*include[ \t]*\[\"<] { BEGIN IFILE; }
+28 | Chapter 2: Using Flex
+Download at Boykma.Com
+handle filename up to the closing quote, >, or end of line
+<IFILE>[^ \t\n\">]+ {
+{ int c;
+while((c = input()) && c != '\n') ;
+}
+yylineno++;
+if(!newfile(yytext))
+yyterminate(); /* no such file */
+BEGIN INITIAL;
+}
+handle bad input in IFILE state
+<IFILE>.|\n { fprintf(stderr, "%4d bad include line\n", yylineno);
+yyterminate();
+}
+pop the file stack at end of file, terminate if it's the outermost file
+<<EOF>> { if(!popfile()) yyterminate(); }
+print the line number at the beginning of each line
+and bump the line number each time a \n is read
+^. { fprintf(yyout, "%4d %s", yylineno, yytext); }
+^\n { fprintf(yyout, "%4d %s", yylineno++, yytext); }
+\n { ECHO; yylineno++; }
+. { ECHO; }
+%%
+main(int argc, char **argv)
+{
+if(argc < 2) {
+fprintf(stderr, "need filename\n");
+return 1;
+}
+if(newfile(argv[1]))
+yylex();
+}
+int
+newfile(char *fn)
+{
+FILE *f = fopen(fn, "r");
+struct bufstack *bs = malloc(sizeof(struct bufstack));
+/* die if no file or no room */
+if(!f) { perror(fn); return 0; }
+if(!bs) { perror("malloc"); exit(1); }
+/* remember state */
+if(curbs)curbs->lineno = yylineno;
+bs->prev = curbs;
+/* set up current entry */
+bs->bs = yy_create_buffer(f, YY_BUF_SIZE);
+Start States and Nested Input Files | 29
+Download at Boykma.Com
+bs->f = f;
+bs->filename = fn;
+yy_switch_to_buffer(bs->bs);
+curbs = bs;
+yylineno = 1;
+curfilename = fn;
+return 1;
+}
+int
+popfile(void)
+{
+struct bufstack *bs = curbs;
+struct bufstack *prevbs;
+if(!bs) return 0;
+/* get rid of current entry
+fclose(bs->f);
+yy_delete_buffer(bs->bs);
+/* switch back to previous */
+prevbs = bs->prev;
+free(bs);
+if(!prevbs) return 0;
+yy_switch_to_buffer(prevbs->bs);
+curbs = prevbs;
+yylineno = curbs->lineno;
+curfilename = curbs->filename;
+return
+```
