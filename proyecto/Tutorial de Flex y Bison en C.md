@@ -39,20 +39,27 @@ Codigo
 Las secciones de Declaracion y Configuracion de Opciones y el Codigo son identicos a un programa Flex, sin embargo las Declaraciones de Bison definen los nombres de simbolos terminales y no terminales, asi como la descripcion de presedencia u orden de operadores y los tipos de datos de los valores semanticos dados y las Reglas Gramaticales son las producciones de la dramatica, las cuales pueden llevar asociadas acciones de acuerdo a lo que encuentre el analizador.
 
 ## Instalacion
-Antes de entrar a detalles en cuanto a ambas herramientras, primero hay que explicar como se instalan estas asi de un sencillo ejemplo para verificar que estas funcionen correctamente. Cabe mencionar que este tutorial esta pensado para Windows 10.
+Antes de entrar a detalles en cuanto a ambas herramientras, primero hay que explicar como se instalan. Cabe mencionar que este tutorial esta pensado para un Sistema Operativo Windows. Tambien se usara CodeBlocks como nuestro ambiente de trabajo: https://www.codeblocks.org/downloads/binaries/
 
 ### Flex
-1 - Descargue CodeBlocks para poder trabajar en un entorno de C: https://www.codeblocks.org/downloads/binaries/
+1 - Descargue el instalador Setup de Flex de la siguiente direccion: https://gnuwin32.sourceforge.net/packages/flex.htm
 
-2 - Descargue Flex de la siguiente direccion: https://gnuwin32.sourceforge.net/packages/flex.htm
+2 - Ejecute "flex-x.x.x.exe" siguiendo las instrucciones.
 
 3 - Dirijase a la carpeta donde instalo GnuWin32 y copie la direccion de la carpeta bin en las Variables de Entorno->Variables de Sistema->PATH
 
 4 - Asegurese de que la direccion de GnuWin32 este debajo de la direccion de Codeblocks/MinGW/bin
 
 ### Bison
+1 - Descargue el instalador Setup de Bison de la siguiente direccion: http://gnuwin32.sourceforge.net/packages/bison.htm
 
+2 - Ejecute "bison-x.x.x-setup.exe" siguiendo las instrucciones, pero elija otra carpeta fuera de la default
 
+3 - Dirijase a la carpeta donde instalo GnuWin32 y copie la direccion de la carpeta bin en las Variables de Entorno->Variables de Sistema->PATH
+
+4 - Asegurese de que la direccion de GnuWin32 este debajo de la direccion de Codeblocks/MinGW/bin
+
+Para verificar que ambas se hayan instalado correctamente, abra una ventana de comandos(Windows+R y escriba cmd) y escriba "flex --version" y "bison --version". Si fueron instalados correctamente se mostrara un mensaje con la version actual de cada uno de los programas.
 
 ## Flex
 Primero se vera mas de cerca como funciona Flex como una herramienta propia con varios ejemplos.
