@@ -231,4 +231,15 @@ int popfile(void)
   
   return 1;
 }
+```
 
+Primero define los estados iniciales y tambien usa codigo C para declarar las estructuras bufstack que mantendran las entradas en la lista de archivos entrates guardados. En la seccion de Patrones, el primer patron a reconocer son todas las declaraciones "#include" hasta las comillas, despues cambia a las declaraciones "IFILE" para leer el siguiente archivo entrante. El segundo patron reconoce las entradas que coincidan con el nombre de un archivo hasta una comilla cerrante, espacio en blanco o fin de linea, el nombre de archivo es llevado a "newfile" para una pila que acumula la entrada actual y prepara el siguiente nivel de entrada.
+
+, but first there’s the matter of dealing with whatever remains of
+the #include line. One possibility would be to use another start state and patterns that
+absorb the rest of the line, but that would be tricky, since the action switches to the
+included file, so the start state and pattern would have to be used after the end of the
+included file. Instead, this is one of the few places where input() makes a scanner
+simpler. A short loop reads until it finds the \n at the end of the line or EOF. Then,
+when scanning returns to this file after the end of the included one, it resumes at the
+beginning of the next line.
